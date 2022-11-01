@@ -1,0 +1,26 @@
+name: Testing workflow
+
+on:
+  push:
+    branches:
+      - auto-release-fix
+
+jobs:
+  bump-and-pull-request:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: master
+      - name: Bump version
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - run: |
+          pip install -r $GITHUB_WORKSPACE/requirements/release.txt
+          newver=$(bumpversion --dry-run --list patch | grep new_version= | sed -r s,"^.*=",,)
+          echo "NEW_VERSION=${newver}" >> $GITHUB_ENV
+          echo "New version will be ${newver}"
+          bumpversion patch
