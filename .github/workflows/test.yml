@@ -13,7 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: master
+          ref: auto-release-fix
       - name: Bump version
         uses: actions/setup-python@v4
         with:
