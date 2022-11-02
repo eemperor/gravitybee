@@ -23,4 +23,7 @@ jobs:
           newver=$(bumpversion --dry-run --list patch | grep new_version= | sed -r s,"^.*=",,)
           echo "NEW_VERSION=${newver}" >> $GITHUB_ENV
           echo "New version will be ${newver}"
+          echo "Configure Git Identity"
+          git config --global user.email "projects@plus3it.com"
+          git config --global user.name "Plus3 IT Systems"
           bumpversion patch
